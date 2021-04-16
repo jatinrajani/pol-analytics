@@ -1,0 +1,188 @@
+---
+title: Coattail Effect
+author: ''
+date: '2021-04-16'
+slug: coattail-effect
+categories: []
+tags: []
+---
+```{r setup, include=FALSE,warning = FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+---
+
+
+------------------------------------------------------------------------
+
+
+## Index
+
+------------------------------------------------------------------------
+This index is calculated in the following manner:-For eg a party wins in a PC and then  it is calculated how many AC's it has won in the following State Elections in that PC.Supposedly it has won 2 ACs out of 7 in that PC.it is given as 2/7 Then this is  done for 543 constituencies.Score was summed and then is divided by Total Constituencies.To get the index between 0 and 100
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/newdf_13_01_2021.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+
+## Indices of BJP,INC,Regional Parties
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/partynewfinal_13_01.csv')
+totalseats <- subset(totalseats)
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+
+
+
+-----------------------------------------------------------------
+
+# PROBIT REGRESSION
+
+
+-----------------------------------------------------------------
+* This is Probit Regression which is basically a classification problem to determine whether it won Assembly seat or not:
+* Assembly Won is Categorised as Yes or No
+* Indicators are Categorised as:
+  + Parliament Won-PC Won[Categorised into Yes,No]
+  + Year Category Assembly=StateElection Year-LokSabha Election Year
+  + Party Category-National for BJP,INC.Other wise Regional
+
+
+
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/newdata_02_01_2021.csv")
+totalfinaldata$YearCategoryAssembly<-as.factor(totalfinaldata$YearCategoryAssembly)
+year_2009<-totalfinaldata[which(totalfinaldata$Year_y==2009),]
+myprobit_09<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_2009)
+year_2014<-totalfinaldata[which(totalfinaldata$Year_y==2014),]
+myprobit_14<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_2014)
+year_2019<-totalfinaldata[which(totalfinaldata$Year_y==2019),]
+myprobit_19<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_2019)
+library(stargazer)
+
+k1<-stargazer(myprobit_09,myprobit_14,myprobit_19,
+column.labels=c("Year 2009","Year 2014","Year 2019"),
+align=TRUE,type = 'html')
+
+
+
+```
+
+---------------------------------------------------------------------
+
+## Predelimitation Probit Regression
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/finalnewdf_13_01.csv")
+totalfinaldata$YearCategoryAssembly<-as.factor(totalfinaldata$YearCategoryAssembly)
+year_1977<-totalfinaldata[which(totalfinaldata$Year_y==1977),]
+myprobit_77<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1977)
+year_1980<-totalfinaldata[which(totalfinaldata$Year_y==1980),]
+myprobit_80<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1980)
+year_1984<-totalfinaldata[which(totalfinaldata$Year_y==1984),]
+myprobit_84<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1984)
+
+year_1991<-totalfinaldata[which(totalfinaldata$Year_y==1991),]
+myprobit_91<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1991)
+year_1996<-totalfinaldata[which(totalfinaldata$Year_y==1996),]
+myprobit_96<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1996)
+
+year_1999<-totalfinaldata[which(totalfinaldata$Year_y==1999),]
+myprobit_99<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_1999)
+year_2004<-totalfinaldata[which(totalfinaldata$Year_y==2004),]
+myprobit_04<- glm(AssemblyWon ~ State_Vote_Share + ParliamentWon + YearCategoryAssembly+Lok_Sabha_Vote_Share+PartyCategory, family = binomial(link = "probit"),               data = year_2004)
+
+library(stargazer)
+
+k1<-stargazer(myprobit_77,myprobit_80,myprobit_84,myprobit_91,myprobit_96,myprobit_99,myprobit_04,
+column.labels=c("Year 1977","Year 1980","Year 1984", "Year 1991","Year 1996","Year 1999","Year 2004"),
+align=TRUE,type = 'html')
+
+
+
+```
+
+
+---------------------------------------------------------------------
+
+# Proportion of State Assembly Seats Vs Margin of Victory for INC
+---------------------------------------------------------------------
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(ggplot2)
+library(dplyr)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/inc_2_total.csv")
+
+totalfinaldata %>%
+    select(MOV, Proportion) %>%
+    mutate(threshold = as.factor(ifelse(MOV >= 0, 1, 0))) %>%
+    ggplot(aes(x = MOV, y = Proportion, color = threshold)) +
+    geom_point() +
+    geom_smooth(method = "loess", se = FALSE) +
+    scale_color_brewer(palette = "Accent") +
+    guides(color = FALSE) +
+    geom_vline(xintercept = 0, color = "red",
+               size = 1, linetype = "dashed") +
+    labs(y = "INC State ASsembly Vote Share",
+         x = "INC Margin of Victory in Lok Sabha election")
+
+
+
+```
+
+
+## Proportion of State Assembly VoteShare Vs Margin of Victory for BJP
+---------------------------------------------------------------------
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(ggplot2)
+library(dplyr)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/bjp_2_total.csv")
+
+totalfinaldata %>%
+    select(MOV, Proportion) %>%
+    mutate(threshold = as.factor(ifelse(MOV >= 0, 1, 0))) %>%
+    ggplot(aes(x = MOV, y = Proportion, color = threshold)) +
+    geom_point() +
+    geom_smooth(method = "loess", se = FALSE) +
+    scale_color_brewer(palette = "Accent") +
+    guides(color = FALSE) +
+    geom_vline(xintercept = 0, color = "red",
+               size = 1, linetype = "dashed") +
+    labs(y = "BJP State ASsembly Vote Share",
+         x = "BJP Margin of Victory in Lok Sabha election")
+
+
+
+```

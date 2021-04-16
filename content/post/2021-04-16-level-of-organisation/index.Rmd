@@ -1,0 +1,282 @@
+---
+title: Level of Organisation
+author: ''
+date: '2021-04-16'
+slug: level-of-organisation
+categories: []
+tags: []
+---
+```{r set up, warning=FALSE, include=FALSE, message= FALSE }
+
+knitr::opts_chunk$set(cache = FALSE,echo = FALSE, message=FALSE, warning = FALSE,fig.width = 16/2, fig.height = 9/2)
+
+ 
+```
+
+
+
+------------------------------------------------------------------------
+
+# Organisation Level 
+
+-----------------------------------------------------------------
+
+**Data description**
+
+* This dataset contains the level of organisation for each party in each state from 1962-2004.
+* Three levels of organisation are given as:-
+  + 1-Least Organised
+  + 2-In Between
+  + 3-Most Organised
+
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/merged_df_24_12_2020.csv")
+mtcars<-totalfinaldata
+mtcars$Year<-as.character(mtcars$Year)
+fig <- plot_ly(mtcars, y = ~Vote_Share_Percentage, x = ~org,boxpoints="outliers", type = "box")
+fig
+
+
+```
+
+
+# Party Analysis:Number of Units at each level for each Party
+
+-----------------------------------------------------------------
+
+
+**For INC Party**
+-------
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_inc.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~year,color=~org,text=totalfinaldata$year,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Number'), barmode = 'stack')
+fig
+
+
+
+```
+
+-------
+**For INC Party**
+--------
+Proportion of Each Level of Party
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_inc.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Percentage,color=~org,mode = 'text',text=totalfinaldata$Percentage, textposition = 'middle right',textfont = list(color = '#000000', size = 5))
+fig <- fig %>% layout(yaxis = list(title = 'Percentage'), barmode = 'stack')
+fig
+
+
+
+```
+
+-------
+**For BJP Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_bjp.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~year,color=~org,text=totalfinaldata$year,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Number'), barmode = 'stack')
+fig
+
+
+```
+
+-------
+**For BJP Party**
+-------- 
+Proportion of Each Level of Party
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_bjp.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Percentage,color=~org,mode = 'text',text=totalfinaldata$Percentage, textposition = 'middle right',textfont = list(color = '#000000', size = 5))
+fig <- fig %>% layout(yaxis = list(title = 'Percentage'), barmode = 'stack')
+fig
+
+
+```
+
+-------
+**For Regional Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_regional.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~year,color=~org,text=totalfinaldata$year,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Number'), barmode = 'stack')
+
+fig
+
+```
+
+-------
+**For Regional Party**
+--------
+Proportion of Each Level of Party
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk_regional.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Percentage,color=~org,mode = 'text',text=totalfinaldata$Percentage, textposition = 'middle right',textfont = list(color = '#000000', size = 5))
+fig <- fig %>% layout(yaxis = list(title = 'Percentage'), barmode = 'stack')
+fig
+
+
+```
+---
+# Party Analysis : Level of Organisation VS Vote %
+
+**For INC Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk1_inc.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Vote_Share_Percentage,color=~org,text=totalfinaldata$Vote_Share_Percentage,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Vote_Share_Percentage'), barmode = 'grouped')
+fig
+
+
+```
+
+
+**For BJP Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk1_bjp.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Vote_Share_Percentage,color=~org,text=totalfinaldata$Vote_Share_Percentage,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Vote_Share_Percentage'), barmode = 'grouped')
+fig
+
+
+```
+
+**For Regional Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk1_regional.csv")
+totalfinaldata$Phase<-as.factor(totalfinaldata$Phase)
+totalfinaldata$org<-as.factor(totalfinaldata$org)
+fig <- plot_ly(totalfinaldata, x = ~Phase, y = ~Vote_Share_Percentage,color=~org,text=totalfinaldata$Vote_Share_Percentage,textposition='auto')
+fig <- fig %>% layout(yaxis = list(title = 'Vote_Share_Percentage'), barmode = 'grouped')
+fig
+
+
+```
+
+# Party Analysis : Mean Level of Organisation VS Mean Vote % Over the Years
+
+**For INC Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk2_inc.csv")
+library(plotly)
+ay <- list(
+    tickfont = list(color = "red"),
+    overlaying = "y",
+    side = "right",
+    title = "Mean Level of Organisation"
+)
+fig <- plot_ly()
+fig <- fig %>% add_lines(x = ~totalfinaldata$Year, y = ~totalfinaldata$Vote_Share_Percentage, name = "Vote_Share")
+fig <- fig %>% add_lines(x = totalfinaldata$Year, y = totalfinaldata$org, name = "Level of Organisation", yaxis = "y2")
+fig <- fig %>% layout( yaxis2 = ay,
+    xaxis = list(title="Year"),yaxis=list(title='Mean VoteShare'),y2=list(title='Mean Level of Organisation')
+)
+
+fig
+
+
+
+```
+
+**For BJP Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk2_bjp.csv")
+library(plotly)
+ay <- list(
+    tickfont = list(color = "red"),
+    overlaying = "y",
+    side = "right",
+    title = "Mean Level of Organisation"
+)
+fig <- plot_ly()
+fig <- fig %>% add_lines(x = ~totalfinaldata$Year, y = ~totalfinaldata$Vote_Share_Percentage, name = "Vote_Share")
+fig <- fig %>% add_lines(x = totalfinaldata$Year, y = totalfinaldata$org, name = "Level of Organisation", yaxis = "y2")
+fig <- fig %>% layout( yaxis2 = ay,
+    xaxis = list(title="Year"),yaxis=list(title='Mean VoteShare'),y2=list(title='Mean Level of Organisation')
+)
+
+fig
+
+
+
+
+
+```
+
+**For Regional Party**
+
+```{r}
+library(plotly)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/jk2_regional.csv")
+library(plotly)
+ay <- list(
+    tickfont = list(color = "red"),
+    overlaying = "y",
+    side = "right",
+    title = "Mean Level of Organisation"
+)
+fig <- plot_ly()
+fig <- fig %>% add_lines(x = ~totalfinaldata$Year, y = ~totalfinaldata$Vote_Share_Percentage, name = "Vote_Share")
+fig <- fig %>% add_lines(x = totalfinaldata$Year, y = totalfinaldata$org, name = "Level of Organisation", yaxis = "y2")
+fig <- fig %>% layout( yaxis2 = ay,
+    xaxis = list(title="Year"),yaxis=list(title='Mean VoteShare'),y2=list(title='Mean Level of Organisation')
+)
+fig
+
+
+
+
+
+```
+
+# Mean Org Vs Mean Vote Share %
+```{r}
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/NEW STATES/SCHEDULED CASTE LOKSABHA ELECTION/states/states/totalnewparty.csv")
+pl = ggplot(totalfinaldata, aes(x=org, y=Vote_Share_Percentage)) +
+  theme_bw() +theme (panel.border = element_blank(),
+       axis.line= element_line(color='white'),strip.background = element_blank())+
+  geom_point(shape=16, 
+             color = 'black',
+             alpha = 1) +
+  
+  geom_smooth(method='lm',varwidth=TRUE)+ labs(y="Vote %", x = "Mean Org")
+pl + facet_wrap(.~PartyNEW,ncol=3,scales="free_x")
+```
+

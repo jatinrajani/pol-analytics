@@ -1,0 +1,262 @@
+---
+title: RBI ANALYSIS
+author: ''
+date: '2021-04-15'
+slug: post-title
+categories: []
+tags: []
+---
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+------------------------------------------------------------------------
+
+
+## Total Dynast Numbers
+
+------------------------------------------------------------------------
+Dynast Numbers From 1977-2017
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the 
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/dynast_numbers.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+
+## Total Banks Established
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/total_banks_established.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+
+## Growth of Banks by Dynast
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/growth_not_77.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+
+
+
+-----------------------------------------------------------------
+
+## Total Banks Established By Dynast
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggthemes)
+library(plotly)
+growth_new<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/growth_new.csv')
+growth_new$year_x<-as.factor(growth_new$year_x)
+growth_new$dynast<-as.factor(growth_new$dynast)
+ggplot(growth_new) + 
+    geom_line(aes(year_x, banks, group = dynast, colour = dynast)) +
+     facet_wrap(~dynast, nrow  = 2, scales = "free")+
+     
+     theme_fivethirtyeight()
+```
+
+-----------------------------------------------------------------
+
+## Growth of Banks Established by Dynast
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggthemes)
+library(plotly)
+growth_new<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/growth_year_not_77.csv')
+#growth_new$year_x<-as.factor(growth_new$year_x)
+growth_new$dynast<-as.factor(growth_new$dynast)
+ggplot(data=growth_new,
+       aes(x=year_x, y=Growth_Percent, colour=dynast)) +
+       geom_line()+
+     theme_fivethirtyeight()
+```
+
+-----------------------------------------------------------------
+
+## Different Types of Banks Established
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/type_of_banks.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+```
+
+-----------------------------------------------------------------
+
+
+## Which Type of Bank Established by Dynast
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/bank_new_dynast.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+```
+
+-----------------------------------------------------------------
+
+## Places Bank is Established (Eg Rural or Semi Urban)
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/place_bank_group.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+```
+
+-----------------------------------------------------------------
+
+## Bank Established by Dynast Location (Eg Rural or Semi Urban)
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/bank_new_group.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+```
+
+-----------------------------------------------------------------
+
+## Growth of Banks Established on the basis of Location
+
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('D:/OFFICE 08-04-2021/RBI DAATA/new_location.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+```
+
+-----------------------------------------------------------------
+## Regression Discontinuity for Dynasts
+---------------------------------------------------------------------
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(ggplot2)
+library(dplyr)
+totalfinaldata<-readr::read_csv("D:/OFFICE 08-04-2021/RBI DAATA/rd_graph.csv")
+
+totalfinaldata %>%
+    select(Vote_Share_Difference,Numbers) %>%
+    mutate(threshold = as.factor(ifelse(Vote_Share_Difference >= 0, 1, 0))) %>%
+    ggplot(aes(x = Vote_Share_Difference, y = Numbers, color = threshold)) +
+    geom_point() +
+    geom_smooth(method = "loess", se = FALSE) +
+    scale_color_brewer(palette = "Accent") +
+    guides(color = FALSE) +
+    geom_vline(xintercept = 0, color = "red",
+               size = 1, linetype = "dashed") +
+    labs(y = "Banks Established",
+         x = "Margin of Victory of Dynasts")
+
+
+
+```
+
