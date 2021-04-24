@@ -1,0 +1,154 @@
+---
+title: Political Impact
+author: ''
+date: '2021-04-24'
+slug: political-impact
+categories: []
+tags: []
+---
+
+---
+
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
+knitr::opts_chunk$set(cache = FALSE ,echo = FALSE, message=FALSE, warning = FALSE,fig.width = 16/2, fig.height = 9/2)
+library(tidyverse)
+library(data.table)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(gridExtra)
+library(stargazer)
+library(ggbump)
+library(cowplot)
+library(colorspace)
+library(ggthemes)
+library(DT)
+install.packages("data.table")
+
+library(data.table)
+library(widgetframe)
+`%!in%` = Negate(`%in%`)
+select <- dplyr::select
+```
+---
+
+
+
+# TURNOUT AE LEVEL(1974-2007)
+
+* Turnout was considered for next year
+* dynast variable for previous year
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+library(lfe)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/totalnewdf_final_21_04.csv")
+firstphase$constituency_type<-as.factor(firstphase$constituency_type)
+firstphase$dyn_next<-as.factor(firstphase$dyn_next)
+firstphase$close_election<-as.factor(firstphase$close_election)
+firstphase$recontest_next<-as.factor(firstphase$recontest_next)
+firstphase$turnout_diff<-firstphase$turnout_percentage_next-firstphase$turnout_percentage_prev
+#fit.felm<-felm(turnout_percentage~dyn_cum_2+enop+n_cand+factor(constituency_new_type)+factor(dyn_next)|factor(year_x)+factor(district_name)|0|district_name,data=firstphase)
+#fit.felm<-felm(turnout_diff~dyn_cum_2+enop+lag_turnout+n_cand+factor(constituency_new_type)+factor(dyn_next)|factor(year_x)+factor(district_name)|0|district_name,data=firstphase)
+fit.felm<-felm(dyn_next~dyn_cum_2+margin_percentage_next+enop_next+n_cand_next+constituency_new_type+recontest_next|factor(year_prev)+factor(district_name)|0|district_name,data=firstphase)
+
+stargazer(fit.felm,column.labels=c("OLS","LOGIT","POISSON"),
+no.space=TRUE,align=TRUE,type = 'html',covariate.labels = ,add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'),c('District Fixed Effects', 'Yes','Yes','Yes')))
+```
+
+
+# ENOP AE LEVEL(1974-2007)
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(lfe)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/totalfinal_new_ae.csv")
+firstphase$constituency_new_type<-as.factor(firstphase$constituency_new_type)
+
+firstphase$close_election<-as.factor(firstphase$close_election)
+firstphase$turnout_diff<-firstphase$turnout_percentage-firstphase$lag_turnout
+fit.felm<-felm(enop~dyn_cum_2+lag_turnout+factor(dyn_next)+close_election+constituency_new_type|factor(year_x)+factor(district_name)|0|district_name,data=firstphase)
+
+firstphase.p<-pdata.frame(firstphase,index=c("year_x","district_name"))
+
+second_phase_model_logit<-glm(data =firstphase.p, enop~dyn_cum_2)
+second_phase_model_poisson<-glm(data =firstphase.p, enop~dyn_cum_2,family =  "quasipoisson")
+
+
+stargazer(fit.felm,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'), c('District fixed effects', 'Yes','Yes','Yes','Yes')))
+
+```
+
+# NUMBER OF CANDIDATES AE LEVEL(1974-2007)
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(lfe)
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/totalnewdf_final_21_04.csv")
+fit.felm<-felm(n_cand_next~dyn_cum_2+n_cand_prev+factor(recontest_next)|factor(year_prev)+factor(district_name)|0|district_name,data=firstphase)
+
+stargazer(fit.felm,column.labels=c("OLS","LOGIT","POISSON"),
+no.space=TRUE,align=TRUE,type = 'html',covariate.labels = ,add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'),c('District Fixed Effects', 'Yes','Yes','Yes')))
+
+
+```
+
+
+# MARGIN OF VICTORY AE LEVEL(1974-2007)
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/totaldfae.csV")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year_x"))
+first_phase_model.p<-plm(margin_percentage~dyn_cum_2,data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, margin_percentage~dyn_cum_2)
+second_phase_model_poisson<-glm(data =firstphase.p, margin_percentage~dyn_cum_2,family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'),c('Constituency Type fixed effects', 'Yes','Yes','Yes','Yes')))
+
+```
+
+---
+# TURNOUT AT GE LEVEL ALL INDIA
+
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/finalgedata.csv")
+
+firstphase$constituency_type<-as.factor(firstphase$constituency_type)
+fit.felm<-felm(turnout_percentage_next~dyn+turnout_percentage_prev+margin_percentage_next+recontest_final+enop_next|factor(year_prev)+factor(state_name),data=firstphase)
+
+
+
+stargazer(fit.felm,column.labels=c("OLS"),
+no.space=TRUE,align=TRUE,type = 'html',covariate.labels = ,add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'),c('State fixed effects', 'Yes','Yes','Yes')))
+
+
+
+
+
+```
+# TURNOUT AT GE LEVEL ALL INDIA WITH ADR VARIABLES
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(lfe)
+library(stargazer)
+adrdata<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/DYNASTY NEW FOLDER/finaladrdyn.csv")
+
+fit.felm<-felm(turnout_percentage_next~dyn+criminalcases+turnout_percentage_prev+log(total_assets_next)|factor(year_prev)+factor(state_name),data=adrdata)
+stargazer(fit.felm,column.labels=c("OLS"),
+no.space=TRUE,align=TRUE,type = 'html',covariate.labels = ,add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'),c('State fixed effects', 'Yes','Yes','Yes')))
+
+
+
+
+
+```
+```
