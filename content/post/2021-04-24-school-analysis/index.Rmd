@@ -1,0 +1,230 @@
+---
+title: School Analysis
+author: ''
+date: '2021-04-24'
+slug: school-analysis
+categories: []
+tags: []
+---
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
+knitr::opts_chunk$set(cache = FALSE ,echo = FALSE, message=FALSE, warning = FALSE,fig.width = 16/2, fig.height = 9/2)
+library(tidyverse)
+library(data.table)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(gridExtra)
+library(stargazer)
+library(ggbump)
+library(cowplot)
+library(colorspace)
+library(ggthemes)
+library(DT)
+install.packages("data.table")
+library(data.table)
+library(widgetframe)
+`%!in%` = Negate(`%in%`)
+select <- dplyr::select
+```
+---
+
+---
+
+
+
+# DISE DATA UP
+
+Intially it contained 2,95,721 schools.But after removing those schools whose year of establishment not given correctly and subsetting the year range between 1977 and 2019 we got 226852 schools and merging it with dynasty dataset we got 220932 schools
+
+```{r}
+college_up <- fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/sch_final.csv")
+
+#Hmisc::describe(college_up)
+```
+
+
+### Main variables
+
+```{r}
+names(college_up)
+```
+
+### types of management
+
+
+```{r}
+library(data.table)
+library(dplyr)
+college_up <- fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/sch_new.csv")
+college_up %>% group_by(School_New_Management) %>% summarise(count = n())
+```
+
+### Year by year break-up of number of Schools
+Private Unaided as Private and Madarsa Unrecogonized,Unrecogonized schools as others,and all remaining schools as Government
+
+
+```{r}
+library(data.table)
+library(dplyr)
+college_up <- fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/sch_group.csv")
+
+college_up  %>% 
+    ggplot(aes(factor(Yeur_Estd), college_up$`Unnamed: 0`, fill =Sch_New_Final_Management))+
+    geom_bar(position = "stack",stat = "identity")+
+    labs(x = "Year",y='Schools Established')+
+    theme_minimal()+
+    theme(#axis.text.x = element_text(angle = 90),
+        #legend.position = "bottom", 
+        axis.text.y = element_text(size = 7))+
+    coord_flip()
+
+ 
+```
+
+### breakup of election year school established
+
+
+```{r}
+library(data.table)
+library(dplyr)
+college_up <- fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/number_schools_ae.csv")
+college_up %>% group_by(year) %>%     
+  summarise_at(vars(n_schools),  
+               list(schools_established = sum)) 
+```
+
+## REGRESSION FROM 1977-2017
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/number_schools_ae.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## REGRESSION FROM 1991-2017
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_1991.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## REGRESSION FROM 1991-2017(GOVERNMENT)
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_gov.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+
+
+```
+
+## REGRESSION FROM 1991-2017(PRIVATE)
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_pri.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+## REGRESSION ALL SCHOOLS(1977-2019)[PC LEVEL]
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/all_Schools_pc.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## REGRESSION FROM 1991-2019[PC LEVEL]
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_post_91.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## REGRESSION FROM 1991-2019(Government)[PC LEVEL]
+
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_gov_pc.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## REGRESSION FROM 1991-2019(Private)[PC LEVEL]
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/SCHOOL DATA NEW/merge_pri_pc.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+

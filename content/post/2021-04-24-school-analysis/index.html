@@ -1,0 +1,2644 @@
+---
+title: School Analysis
+author: ''
+date: '2021-04-24'
+slug: school-analysis
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<hr />
+<div id="dise-data-up" class="section level1">
+<h1>DISE DATA UP</h1>
+<p>Intially it contained 2,95,721 schools.But after removing those schools whose year of establishment not given correctly and subsetting the year range between 1977 and 2019 we got 226852 schools and merging it with dynasty dataset we got 220932 schools</p>
+<div id="main-variables" class="section level3">
+<h3>Main variables</h3>
+<pre><code>##  [1] &quot;V1&quot;                 &quot;District_Name&quot;      &quot;School_Code&quot;       
+##  [4] &quot;AC_YEAR_x&quot;          &quot;School_Name&quot;        &quot;Block_Name&quot;        
+##  [7] &quot;Cluster_Name&quot;       &quot;Village_Name&quot;       &quot;Final Address&quot;     
+## [10] &quot;latitude&quot;           &quot;longitude&quot;          &quot;geometry&quot;          
+## [13] &quot;ac_postdelim&quot;       &quot;pc_postdelim&quot;       &quot;ac_predelim&quot;       
+## [16] &quot;pc_predelim&quot;        &quot;Unnamed: 0_y&quot;       &quot;AC_YEAR_y&quot;         
+## [19] &quot;Yeur_Estd&quot;          &quot;Pre_Pry_YN&quot;         &quot;Residential_Sch_YN&quot;
+## [22] &quot;Sch_Management&quot;     &quot;Lowest_Class&quot;       &quot;School_Type&quot;</code></pre>
+</div>
+<div id="types-of-management" class="section level3">
+<h3>types of management</h3>
+<pre><code>## # A tibble: 11 x 2
+##    School_New_Management       count
+##    &lt;chr&gt;                       &lt;int&gt;
+##  1 DOE                        112948
+##  2 Govt/Private Aided           5654
+##  3 Local Body                    947
+##  4 Madarsa Recogonized         11083
+##  5 Madarsa Unrecogonized        3844
+##  6 Other                         215
+##  7 Other Govt Managed Schools    418
+##  8 Others                       8989
+##  9 Private Unaided             82049
+## 10 Tribal Welfare                586
+## 11 Unrecogonized                 119</code></pre>
+</div>
+<div id="year-by-year-break-up-of-number-of-schools" class="section level3">
+<h3>Year by year break-up of number of Schools</h3>
+<p>Private Unaided as Private and Madarsa Unrecogonized,Unrecogonized schools as others,and all remaining schools as Government</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+</div>
+<div id="breakup-of-election-year-school-established" class="section level3">
+<h3>breakup of election year school established</h3>
+<pre><code>## # A tibble: 11 x 2
+##     year schools_established
+##    &lt;int&gt;               &lt;int&gt;
+##  1  1977                6533
+##  2  1980                8811
+##  3  1985                7134
+##  4  1989                6315
+##  5  1991                6214
+##  6  1993               13985
+##  7  1996               50582
+##  8  2002               52309
+##  9  2007               40105
+## 10  2012               27829
+## 11  2017                1115</code></pre>
+</div>
+<div id="regression-from-1977-2017" class="section level2">
+<h2>REGRESSION FROM 1977-2017</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-0.702
+</td>
+<td>
+-1.399
+</td>
+<td>
+-0.034
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.416)
+</td>
+<td>
+(1.427)
+</td>
+<td>
+(0.069)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.147<sup>**</sup>
+</td>
+<td>
+-0.278<sup>***</sup>
+</td>
+<td>
+-0.009<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.059)
+</td>
+<td>
+(0.047)
+</td>
+<td>
+(0.002)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-0.134
+</td>
+<td>
+-0.303
+</td>
+<td>
+-0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.445)
+</td>
+<td>
+(0.414)
+</td>
+<td>
+(0.021)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+41.543<sup>***</sup>
+</td>
+<td>
+27.364<sup>***</sup>
+</td>
+<td>
+1.367<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(3.323)
+</td>
+<td>
+(1.380)
+</td>
+<td>
+(0.063)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-302.771<sup>***</sup>
+</td>
+<td>
+-13.537<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(16.266)
+</td>
+<td>
+(0.780)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+12,239
+</td>
+<td>
+12,239
+</td>
+<td>
+12,239
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.017
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.016
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-64,352.430
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+128,714.900
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+53.795<sup>***</sup> (df = 4; 12224)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2017" class="section level2">
+<h2>REGRESSION FROM 1991-2017</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-0.505
+</td>
+<td>
+-1.722
+</td>
+<td>
+-0.059
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.784)
+</td>
+<td>
+(1.794)
+</td>
+<td>
+(0.078)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.194<sup>**</sup>
+</td>
+<td>
+-0.444<sup>***</sup>
+</td>
+<td>
+-0.016<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.091)
+</td>
+<td>
+(0.069)
+</td>
+<td>
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-0.177
+</td>
+<td>
+-0.431
+</td>
+<td>
+-0.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.674)
+</td>
+<td>
+(0.621)
+</td>
+<td>
+(0.026)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+46.678<sup>***</sup>
+</td>
+<td>
+25.364<sup>***</sup>
+</td>
+<td>
+0.912<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(4.391)
+</td>
+<td>
+(2.739)
+</td>
+<td>
+(0.102)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-267.625<sup>***</sup>
+</td>
+<td>
+-7.335<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(34.502)
+</td>
+<td>
+(1.310)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+8,466
+</td>
+<td>
+8,466
+</td>
+<td>
+8,466
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.020
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.019
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-45,941.510
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+91,893.030
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+43.004<sup>***</sup> (df = 4; 8455)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2017government" class="section level2">
+<h2>REGRESSION FROM 1991-2017(GOVERNMENT)</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+0.309
+</td>
+<td>
+-0.411
+</td>
+<td>
+-0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(2.145)
+</td>
+<td>
+(2.144)
+</td>
+<td>
+(0.100)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.165
+</td>
+<td>
+-0.397<sup>***</sup>
+</td>
+<td>
+-0.016<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.108)
+</td>
+<td>
+(0.083)
+</td>
+<td>
+(0.004)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+0.722
+</td>
+<td>
+0.324
+</td>
+<td>
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.798)
+</td>
+<td>
+(0.735)
+</td>
+<td>
+(0.033)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+36.462<sup>***</sup>
+</td>
+<td>
+22.637<sup>***</sup>
+</td>
+<td>
+0.880<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(5.222)
+</td>
+<td>
+(3.361)
+</td>
+<td>
+(0.136)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-240.830<sup>***</sup>
+</td>
+<td>
+-7.149<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(42.401)
+</td>
+<td>
+(1.756)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+5,678
+</td>
+<td>
+5,678
+</td>
+<td>
+5,678
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.013
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.012
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-30,682.080
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+61,374.160
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+19.248<sup>***</sup> (df = 4; 5667)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2017private" class="section level2">
+<h2>REGRESSION FROM 1991-2017(PRIVATE)</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-3.885
+</td>
+<td>
+-6.197
+</td>
+<td>
+-0.173
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(3.900)
+</td>
+<td>
+(4.152)
+</td>
+<td>
+(0.126)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.573<sup>***</sup>
+</td>
+<td>
+-1.039<sup>***</sup>
+</td>
+<td>
+-0.023<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.205)
+</td>
+<td>
+(0.166)
+</td>
+<td>
+(0.004)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-3.361<sup>**</sup>
+</td>
+<td>
+-2.510<sup>*</sup>
+</td>
+<td>
+-0.071<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.540)
+</td>
+<td>
+(1.475)
+</td>
+<td>
+(0.042)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+115.328<sup>***</sup>
+</td>
+<td>
+47.181<sup>***</sup>
+</td>
+<td>
+1.041<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(10.420)
+</td>
+<td>
+(6.113)
+</td>
+<td>
+(0.140)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-487.509<sup>***</sup>
+</td>
+<td>
+-7.961<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(76.246)
+</td>
+<td>
+(1.824)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,084
+</td>
+<td>
+2,084
+</td>
+<td>
+2,084
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.084
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.079
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-11,618.030
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+23,246.060
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+47.236<sup>***</sup> (df = 4; 2073)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-all-schools1977-2019pc-level" class="section level2">
+<h2>REGRESSION ALL SCHOOLS(1977-2019)[PC LEVEL]</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-3.401
+</td>
+<td>
+-1.008
+</td>
+<td>
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(7.580)
+</td>
+<td>
+(8.015)
+</td>
+<td>
+(0.074)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.245
+</td>
+<td>
+-1.127<sup>**</sup>
+</td>
+<td>
+-0.013<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.515)
+</td>
+<td>
+(0.476)
+</td>
+<td>
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-15.006<sup>***</sup>
+</td>
+<td>
+-2.543
+</td>
+<td>
+-0.009
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(4.281)
+</td>
+<td>
+(4.118)
+</td>
+<td>
+(0.040)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+146.887<sup>***</sup>
+</td>
+<td>
+86.022<sup>***</sup>
+</td>
+<td>
+0.963<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(37.771)
+</td>
+<td>
+(10.822)
+</td>
+<td>
+(0.110)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-1,035.306<sup>***</sup>
+</td>
+<td>
+-8.227<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(147.624)
+</td>
+<td>
+(1.516)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+2,369
+</td>
+<td>
+2,369
+</td>
+<td>
+2,369
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.012
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.007
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-15,295.600
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+30,601.210
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+7.299<sup>***</sup> (df = 4; 2355)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2019pc-level" class="section level2">
+<h2>REGRESSION FROM 1991-2019[PC LEVEL]</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-6.731
+</td>
+<td>
+-14.424
+</td>
+<td>
+-0.124
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(9.807)
+</td>
+<td>
+(10.271)
+</td>
+<td>
+(0.086)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-0.487
+</td>
+<td>
+-1.450<sup>**</sup>
+</td>
+<td>
+-0.012<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.775)
+</td>
+<td>
+(0.674)
+</td>
+<td>
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-19.251<sup>***</sup>
+</td>
+<td>
+-20.023<sup>***</sup>
+</td>
+<td>
+-0.166<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(5.829)
+</td>
+<td>
+(6.232)
+</td>
+<td>
+(0.051)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+168.476<sup>***</sup>
+</td>
+<td>
+-42.010<sup>*</sup>
+</td>
+<td>
+-0.347<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(49.589)
+</td>
+<td>
+(23.905)
+</td>
+<td>
+(0.194)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+865.039<sup>**</sup>
+</td>
+<td>
+10.915<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(338.731)
+</td>
+<td>
+(2.753)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+1,626
+</td>
+<td>
+1,626
+</td>
+<td>
+1,626
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.015
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.009
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-10,761.240
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+21,532.470
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+6.124<sup>***</sup> (df = 4; 1616)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2019governmentpc-level" class="section level2">
+<h2>REGRESSION FROM 1991-2019(Government)[PC LEVEL]</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-2.015
+</td>
+<td>
+46.686
+</td>
+<td>
+0.189<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(23.979)
+</td>
+<td>
+(29.508)
+</td>
+<td>
+(0.111)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+-4.472<sup>**</sup>
+</td>
+<td>
+-11.595<sup>***</sup>
+</td>
+<td>
+-0.047<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.783)
+</td>
+<td>
+(1.818)
+</td>
+<td>
+(0.007)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-37.584<sup>**</sup>
+</td>
+<td>
+-16.581
+</td>
+<td>
+-0.045
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(14.735)
+</td>
+<td>
+(18.276)
+</td>
+<td>
+(0.069)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+357.635<sup>***</sup>
+</td>
+<td>
+109.076<sup>*</sup>
+</td>
+<td>
+0.440<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(121.071)
+</td>
+<td>
+(61.402)
+</td>
+<td>
+(0.245)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-644.291
+</td>
+<td>
+1.774
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(857.814)
+</td>
+<td>
+(3.427)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+395
+</td>
+<td>
+395
+</td>
+<td>
+395
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.058
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.039
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-2,719.254
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+5,448.507
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+5.983<sup>***</sup> (df = 4; 386)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="regression-from-1991-2019privatepc-level" class="section level2">
+<h2>REGRESSION FROM 1991-2019(Private)[PC LEVEL]</h2>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_schools
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-18.353
+</td>
+<td>
+-2.835
+</td>
+<td>
+-0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(18.456)
+</td>
+<td>
+(20.658)
+</td>
+<td>
+(0.125)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+0.134
+</td>
+<td>
+-1.498
+</td>
+<td>
+-0.010
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.372)
+</td>
+<td>
+(1.273)
+</td>
+<td>
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+-49.170<sup>***</sup>
+</td>
+<td>
+-35.506<sup>***</sup>
+</td>
+<td>
+-0.234<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(11.341)
+</td>
+<td>
+(12.795)
+</td>
+<td>
+(0.081)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+473.793<sup>***</sup>
+</td>
+<td>
+104.765<sup>**</sup>
+</td>
+<td>
+0.670<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(93.187)
+</td>
+<td>
+(42.986)
+</td>
+<td>
+(0.265)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-1,107.096<sup>*</sup>
+</td>
+<td>
+-3.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(600.539)
+</td>
+<td>
+(3.693)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+395
+</td>
+<td>
+395
+</td>
+<td>
+395
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.106
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.087
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-2,578.413
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+5,166.826
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+11.397<sup>***</sup> (df = 4; 386)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+</div>
