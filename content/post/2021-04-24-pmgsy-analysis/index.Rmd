@@ -1,0 +1,146 @@
+---
+title: PMGSY Analysis
+author: ''
+date: '2021-04-24'
+slug: pmgsy-analysis
+categories: []
+tags: []
+---
+---
+
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
+knitr::opts_chunk$set(cache = FALSE ,echo = FALSE, message=FALSE, warning = FALSE,fig.width = 16/2, fig.height = 9/2)
+library(tidyverse)
+library(data.table)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(gridExtra)
+library(stargazer)
+library(ggbump)
+library(cowplot)
+library(colorspace)
+library(ggthemes)
+library(DT)
+install.packages("data.table")
+library(data.table)
+library(widgetframe)
+`%!in%` = Negate(`%in%`)
+select <- dplyr::select
+```
+---
+
+
+
+# PMGSY NO OF ROADS REGRESSION
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/t1new.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(no_roads~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, no_roads~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, no_roads~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+
+# PMGSY LENGTH OF ROAD REGRESSION
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/dyn_pmgsy.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(firstphase.p$`road length (kms)`~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, firstphase.p$`road length (kms)`~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, firstphase.p$`road length (kms)`~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+
+
+# PMGSY SANCTIONED COST OF PROJECTS  REGRESSION MODEL
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/dyn_pmgsy.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(firstphase.p$`sanction cost`~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, firstphase.p$`sanction cost`~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, firstphase.p$`sanction cost`~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+## UTTAR PRADESH AC PMGSY ROAD MODELS
+No of Roads Regression
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/t2new.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(no_roads~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, no_roads~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, no_roads~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+
+
+# PMGSY LENGTH OF ROAD REGRESSION
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/merged_ac_all.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(firstphase.p$`Road Length (Kms)`~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, firstphase.p$`Road Length (Kms)`~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, firstphase.p$`Road Length (Kms)`~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
+
+
+
+
+# PMGSY SANCTIONED COST OF PROJECTS  REGRESSION MODEL
+
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-fread("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/PMGS/merged_ac_all.csv")
+
+
+firstphase.p<-pdata.frame(firstphase,index=c("year"))
+first_phase_model.p<-plm(firstphase.p$`Sanction Cost`~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, firstphase.p$`Sanction Cost`~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, firstphase.p$`Sanction Cost`~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+```
