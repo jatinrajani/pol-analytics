@@ -22,41 +22,8 @@ tags: []
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%</code></pre>
 <pre><code>## Warning: package &#39;magrittr&#39; was built under R version 4.0.4</code></pre>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   X1 = col_double(),
-##   pc11_state_id = col_double(),
-##   pc11_district_id = col_double(),
-##   pc11_village_id = col_double(),
-##   pc11_town_id = col_double(),
-##   lgd_district_id = col_double(),
-##   rbi_serial_number = col_double(),
-##   rbi_pincode = col_double(),
-##   rbi_license_date = col_datetime(format = &quot;&quot;),
-##   Latitude = col_double(),
-##   Longitude = col_double(),
-##   date = col_date(format = &quot;&quot;),
-##   year = col_double(),
-##   month = col_double()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 37 parsing failures.
 ##  row              col   expected    actual                                                                              file
 ## 8001 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
@@ -66,8 +33,6 @@ library(magrittr) # needs to be run every time you start R and want to use %&gt;
 ## 8009 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
 ## .... ................ .......... ......... .................................................................................
 ## See problems(...) for more details.</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1,AC,Country,date,geometry,Latitude,lgd_district_id,lgd_district_name,lgd_state_name,Longitude,month,PC,pc11_district_id,pc11_district_name,pc11_state_id,pc11_state_name,pc11_town_id,pc11_village_id))
-ls(totalseats)</code></pre>
 <pre><code>##  [1] &quot;Final Address&quot;        &quot;rbi_ad_category&quot;      &quot;rbi_address&quot;         
 ##  [4] &quot;rbi_bank&quot;             &quot;rbi_bank_group&quot;       &quot;rbi_branch&quot;          
 ##  [7] &quot;rbi_branch_office&quot;    &quot;rbi_center_name&quot;      &quot;rbi_date_of_open&quot;    
@@ -86,30 +51,8 @@ ls(totalseats)</code></pre>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_bank_group.csv&#39;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   rbi_bank_group = col_character(),
-##   Count = col_double()
-## )</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1))
-library(kableExtra)</code></pre>
 <pre><code>## Warning: package &#39;kableExtra&#39; was built under R version 4.0.3</code></pre>
-<pre><code>## 
-## Attaching package: &#39;kableExtra&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     group_rows</code></pre>
-<pre class="r"><code>totalseats %&gt;%
-  kbl() %&gt;%
-  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -183,25 +126,7 @@ SMALL FINANCE BANK
 <hr />
 <p>TYPE OF RBI BANK POPULATION GROUPS</p>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_population_group.csv&#39;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   rbi_population_group = col_character(),
-##   Count = col_double()
-## )</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1))
-library(kableExtra)
-
-totalseats %&gt;%
-  kbl() %&gt;%
-  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -237,25 +162,7 @@ Semi-urban
 <div id="banks-established-over-the-election-years" class="section level2">
 <h2>BANKS ESTABLISHED OVER THE ELECTION YEARS</h2>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_year_group.csv&#39;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   year = col_double(),
-##   Count = col_double()
-## )</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1))
-library(kableExtra)
-
-totalseats %&gt;%
-  kbl() %&gt;%
-  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -354,25 +261,7 @@ Count
 <p>TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE</p>
 <hr />
 <p>Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks</p>
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_type_bank.csv&#39;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   Type = col_character(),
-##   Count = col_double()
-## )</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1))
-library(kableExtra)
-
-totalseats %&gt;%
-  kbl() %&gt;%
-  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -406,30 +295,6 @@ Private
 <hr />
 <p>TYPE OF BANKS ESTABLISHED YEAR WISE</p>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-library(ggplot2)</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.3</code></pre>
-<pre class="r"><code>totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/all_type.csv&#39;)</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   Type = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>totalseats &lt;- subset(totalseats,select=-c(X1))</code></pre>
-<pre><code>## Warning in eval(substitute(select), nl, parent.frame()): unable to translate
-## &#39;&lt;U+FFFD&gt;..si.no&#39; to native encoding</code></pre>
-<pre class="r"><code>totalseats$year_y&lt;-as.factor(totalseats$year_y)
-ggplot(totalseats,aes(x=totalseats$year_y,y=totalseats$`Unnamed: 0_x`,fill=Type))+geom_col()+coord_flip()+labs(
-        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
-<pre><code>## Warning: Use of `totalseats$year_y` is discouraged. Use `year_y` instead.</code></pre>
-<pre><code>## Warning: Use of `totalseats$`Unnamed: 0_x`` is discouraged. Use `Unnamed: 0_x`
-## instead.</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <hr />
 </div>
