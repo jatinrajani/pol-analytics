@@ -6,6 +6,9 @@ slug: school-analysis
 categories: []
 tags: []
 ---
+
+---
+
 ```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 knitr::opts_chunk$set(cache = FALSE ,echo = FALSE, message=FALSE, warning = FALSE,fig.width = 16/2, fig.height = 9/2)
 library(tidyverse)
@@ -225,6 +228,4 @@ second_phase_model_poisson<-glm(data =firstphase.p, n_schools~dyn_cum_2+turnout_
 
 stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
 ```
-
-
 
