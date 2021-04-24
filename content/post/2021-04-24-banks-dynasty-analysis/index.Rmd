@@ -15,7 +15,7 @@ tags: []
 ------------------------------------------------------------------------
 There were total of 8057 Banks.But some were established before than 1977 and so after merging there are total now 7351 banks.
 ------------------------------------------------------------------------
-```{r,echo=FALSE,include=TRUE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -32,7 +32,7 @@ TYPE OF RBI BANK GROUPS
 ------------------------------------------------------------------------
 
 
-```{r,echo=FALSE,include=TRUE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -54,7 +54,7 @@ TYPE OF RBI BANK POPULATION GROUPS
 ------------------------------------------------------------------------
 
 
-```{r,echo=FALSE,include=TRUE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -76,7 +76,7 @@ totalseats %>%
 ------------------------------------------------------------------------
 
 
-```{r,echo=FALSE,include=TRUE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -97,7 +97,7 @@ TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE
 
 ------------------------------------------------------------------------
 Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks
-```{r,echo=FALSE,include=TRUE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -181,7 +181,7 @@ stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisso
 
 ------------
 
-```{r,warning = FALSE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -201,7 +201,7 @@ State wise breakup of banks post 2009
 
 -----
 
-```{r,warning = FALSE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -222,7 +222,7 @@ ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),
 
 -----
 
-```{r,warning = FALSE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -244,7 +244,7 @@ ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_co
 ## Year wise breakup of banks 2009-2019
 -----
 
-```{r,warning = FALSE,message=FALSE}
+```{r,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%

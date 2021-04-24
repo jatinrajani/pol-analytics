@@ -22,17 +22,6 @@ tags: []
 </tr>
 </tbody>
 </table>
-<pre><code>## Warning: package &#39;magrittr&#39; was built under R version 4.0.4</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Warning: 37 parsing failures.
-##  row              col   expected    actual                                                                              file
-## 8001 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
-## 8003 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
-## 8007 rbi_license_date date like  27-Mar-74 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
-## 8008 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
-## 8009 rbi_license_date date like  01-Apr-13 &#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;
-## .... ................ .......... ......... .................................................................................
-## See problems(...) for more details.</code></pre>
 <pre><code>##  [1] &quot;Final Address&quot;        &quot;rbi_ad_category&quot;      &quot;rbi_address&quot;         
 ##  [4] &quot;rbi_bank&quot;             &quot;rbi_bank_group&quot;       &quot;rbi_branch&quot;          
 ##  [7] &quot;rbi_branch_office&quot;    &quot;rbi_center_name&quot;      &quot;rbi_date_of_open&quot;    
@@ -51,8 +40,6 @@ tags: []
 </tr>
 </tbody>
 </table>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Warning: package &#39;kableExtra&#39; was built under R version 4.0.3</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -126,7 +113,6 @@ SMALL FINANCE BANK
 <hr />
 <p>TYPE OF RBI BANK POPULATION GROUPS</p>
 <hr />
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -162,7 +148,6 @@ Semi-urban
 <div id="banks-established-over-the-election-years" class="section level2">
 <h2>BANKS ESTABLISHED OVER THE ELECTION YEARS</h2>
 <hr />
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -260,8 +245,7 @@ Count
 <hr />
 <p>TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE</p>
 <hr />
-<p>Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks</p>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks
 <table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -954,68 +938,20 @@ F Statistic
 <li>Banks Post 2009 after merging with dynasty dataset:-31430</li>
 </ul>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-library(ggplot2)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks.csv&#39;)
-totalseats &lt;- subset(totalseats,select=-c(X1))
-totalseats&lt;-totalseats[order(totalseats$n_banks),]
-ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
-    y =&quot;Banks Established&quot;, x = &quot;State_Name&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <hr />
 <p>State wise breakup of banks post 2009</p>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-library(ggplot2)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks_post_2009.csv&#39;)
-totalseats &lt;- subset(totalseats,select=-c(X1))
-totalseats&lt;-totalseats[order(totalseats$n_banks),]
-ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
-    y =&quot;Banks Established&quot;, x = &quot;State_Name&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <hr />
 <div id="year-wise-breakup-of-banks-1977-2019" class="section level2">
 <h2>Year wise breakup of banks 1977-2019</h2>
 <hr />
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-library(ggplot2)
-library(dplyr)
-library(ggplot2)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks.csv&#39;)
-totalseats &lt;- subset(totalseats,select=-c(X1))
-totalseats$year&lt;-as.factor(totalseats$year)
-ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
-        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <hr />
 </div>
 <div id="year-wise-breakup-of-banks-2009-2019" class="section level2">
 <h2>## Year wise breakup of banks 2009-2019</h2>
-<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
-#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
-#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
-library(magrittr) # needs to be run every time you start R and want to use %&gt;%
-library(dplyr)
-library(ggplot2)
-library(dplyr)
-library(ggplot2)
-totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks_post_2009.csv&#39;)
-totalseats &lt;- subset(totalseats,select=-c(X1))
-totalseats$year&lt;-as.factor(totalseats$year)
-ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
-        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <hr />
 </div>
