@@ -14,7 +14,7 @@ tags: []
 ------------------------------------------------------------------------
 There were total of 8057 Banks.But some were established before than 1977 and so after merging there are total now 7351 banks.
 ------------------------------------------------------------------------
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -31,7 +31,7 @@ TYPE OF RBI BANK GROUPS
 ------------------------------------------------------------------------
 
 
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -53,7 +53,7 @@ TYPE OF RBI BANK POPULATION GROUPS
 ------------------------------------------------------------------------
 
 
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -75,7 +75,7 @@ totalseats %>%
 ------------------------------------------------------------------------
 
 
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -96,7 +96,7 @@ TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE
 
 ------------------------------------------------------------------------
 Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
@@ -117,7 +117,7 @@ TYPE OF BANKS ESTABLISHED YEAR WISE
 
 ------------------------------------------------------------------------
 
-```{r,warning = FALSE,message=FALSE}
+```{r set up, warning=FALSE, include=FALSE, message= FALSE}
 #install.packages("kableExtra")
 #install.packages("magrittr") # package installations are only needed the first time you use it
 #install.packages("dplyr")    # alternative installation of the %>%
