@@ -1,0 +1,282 @@
+---
+title: Banks Dynasty Analysis
+author: ''
+date: '2021-04-24'
+slug: banks-dynasty-analysis
+categories: []
+tags: []
+---
+------------------------------------------------------------------------
+
+
+## Main Variables UP Analysis
+
+------------------------------------------------------------------------
+There were total of 8057 Banks.But some were established before than 1977 and so after merging there are total now 7351 banks.
+------------------------------------------------------------------------
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv')
+totalseats <- subset(totalseats,select=-c(X1,AC,Country,date,geometry,Latitude,lgd_district_id,lgd_district_name,lgd_state_name,Longitude,month,PC,pc11_district_id,pc11_district_name,pc11_state_id,pc11_state_name,pc11_town_id,pc11_village_id))
+ls(totalseats)
+
+```
+------------------------------------------------------------------------
+TYPE OF RBI BANK GROUPS
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_bank_group.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+TYPE OF RBI BANK POPULATION GROUPS
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_population_group.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+## BANKS ESTABLISHED OVER THE ELECTION YEARS
+
+------------------------------------------------------------------------
+
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_year_group.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE
+
+------------------------------------------------------------------------
+Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_type_bank.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"),full_width = FALSE)%>%kable_styling(bootstrap_options = "striped")
+
+```
+------------------------------------------------------------------------
+
+TYPE OF BANKS ESTABLISHED YEAR WISE
+
+------------------------------------------------------------------------
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggplot2)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/all_type.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+totalseats$year_y<-as.factor(totalseats$year_y)
+ggplot(totalseats,aes(x=totalseats$year_y,y=totalseats$`Unnamed: 0_x`,fill=Type))+geom_col()+coord_flip()+labs(
+        y ="Banks Established", x = "Year")
+```
+
+--------------------------------------------------------------------
+
+# REGRESSION ON BANKS
+
+-----------------------------------------------------------------
+Banks From 1977-2019
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_18_04_2021_up_1.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year_x"))
+first_phase_model.p<-plm(n_banks~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_banks~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_banks~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+
+```
+------
+
+## Banks From 1991-2019
+
+------
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/final_91.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("year_x"))
+first_phase_model.p<-plm(n_banks~dyn_cum_2+turnout_percentage+enop+log(electors),data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_banks~dyn_cum_2+turnout_percentage+enop+log(electors))
+second_phase_model_poisson<-glm(data =firstphase.p, n_banks~dyn_cum_2+turnout_percentage+enop+log(electors),family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes')))
+
+```
+
+-------------
+
+# PAN INDIA BANKS
+
+* Total banks (1977-2019)-50505
+* Banks Post 2009 after merging with dynasty dataset:-31430
+
+------------
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggplot2)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+totalseats<-totalseats[order(totalseats$n_banks),]
+ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+    y ="Banks Established", x = "State_Name")
+```
+
+-----
+
+State wise breakup of banks post 2009
+
+-----
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggplot2)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks_post_2009.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+totalseats<-totalseats[order(totalseats$n_banks),]
+ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+    y ="Banks Established", x = "State_Name")
+```
+
+-----
+
+
+## Year wise breakup of banks 1977-2019
+
+-----
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(ggplot2)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+totalseats$year<-as.factor(totalseats$year)
+ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+        y ="Banks Established", x = "Year")
+```
+
+-----
+
+
+## Year wise breakup of banks 2009-2019
+-----
+
+```{r,warning = FALSE,message=FALSE}
+#install.packages("kableExtra")
+#install.packages("magrittr") # package installations are only needed the first time you use it
+#install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(ggplot2)
+totalseats<-readr::read_csv('C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks_post_2009.csv')
+totalseats <- subset(totalseats,select=-c(X1))
+totalseats$year<-as.factor(totalseats$year)
+ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+        y ="Banks Established", x = "Year")
+```
+
+------
+
+## Banks From 2009-2019
+
+------
+```{r,warning=FALSE,results='asis',echo=FALSE,include=TRUE,message=FALSE}
+library(plm)
+library(stargazer)
+firstphase<-readr::read_csv("C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/final_merge_pc_18_04.csv")
+
+firstphase.p<-pdata.frame(firstphase,index=c("Year_x","State_Name"))
+first_phase_model.p<-lm(n_banks~dyn,data=firstphase.p)
+second_phase_model_logit<-glm(data =firstphase.p, n_banks~dyn)
+second_phase_model_poisson<-glm(data =firstphase.p, n_banks~dyn,family =  "quasipoisson")
+
+
+stargazer(first_phase_model.p,second_phase_model_logit,second_phase_model_poisson,column.labels=c("OLS","LOGIT","POISSON"),no.space=TRUE,align=TRUE,type = 'html',add.lines=list(c('Year fixed effects', 'Yes','Yes','Yes'), c('State fixed effects', 'Yes','Yes','Yes','Yes')))
+
+```
+
+-------------

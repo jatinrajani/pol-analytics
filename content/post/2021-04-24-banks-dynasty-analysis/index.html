@@ -1,0 +1,1344 @@
+---
+title: Banks Dynasty Analysis
+author: ''
+date: '2021-04-24'
+slug: banks-dynasty-analysis
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<hr />
+<div id="main-variables-up-analysis" class="section level2">
+<h2>Main Variables UP Analysis</h2>
+<table>
+<tbody>
+<tr class="odd">
+<td>There were total of 8057 Banks.But some were established before than 1977 and so after merging there are total now 7351 banks.</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_data_22_03.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1,AC,Country,date,geometry,Latitude,lgd_district_id,lgd_district_name,lgd_state_name,Longitude,month,PC,pc11_district_id,pc11_district_name,pc11_state_id,pc11_state_name,pc11_town_id,pc11_village_id))
+ls(totalseats)</code></pre>
+<pre><code>##  [1] &quot;Final Address&quot;        &quot;rbi_ad_category&quot;      &quot;rbi_address&quot;         
+##  [4] &quot;rbi_bank&quot;             &quot;rbi_bank_group&quot;       &quot;rbi_branch&quot;          
+##  [7] &quot;rbi_branch_office&quot;    &quot;rbi_center_name&quot;      &quot;rbi_date_of_open&quot;    
+## [10] &quot;rbi_district_name&quot;    &quot;rbi_license_date&quot;     &quot;rbi_license_no&quot;      
+## [13] &quot;rbi_part1code&quot;        &quot;rbi_part2code&quot;        &quot;rbi_pincode&quot;         
+## [16] &quot;rbi_population_group&quot; &quot;rbi_region&quot;           &quot;rbi_serial_number&quot;   
+## [19] &quot;rbi_state_name&quot;       &quot;shrid&quot;                &quot;State&quot;               
+## [22] &quot;year&quot;</code></pre>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">TYPE OF RBI BANK GROUPS</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_bank_group.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %&gt;%
+  kbl() %&gt;%
+  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
+<table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+rbi_bank_group
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+FOREIGN BANKS
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NATIONALISED BANKS
+</td>
+<td style="text-align:right;">
+2896
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PAYMENTS BANK
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PRIVATE SECTOR BANKS
+</td>
+<td style="text-align:right;">
+266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+REGIONAL RURAL BANKS
+</td>
+<td style="text-align:right;">
+3449
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SBI AND ITS ASSOCIATES
+</td>
+<td style="text-align:right;">
+679
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SMALL FINANCE BANK
+</td>
+<td style="text-align:right;">
+57
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>TYPE OF RBI BANK POPULATION GROUPS</p>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_population_group.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %&gt;%
+  kbl() %&gt;%
+  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
+<table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+rbi_population_group
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rural
+</td>
+<td style="text-align:right;">
+6819
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Semi-urban
+</td>
+<td style="text-align:right;">
+532
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="banks-established-over-the-election-years" class="section level2">
+<h2>BANKS ESTABLISHED OVER THE ELECTION YEARS</h2>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_year_group.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %&gt;%
+  kbl() %&gt;%
+  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
+<table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1977
+</td>
+<td style="text-align:right;">
+357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1980
+</td>
+<td style="text-align:right;">
+531
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1985
+</td>
+<td style="text-align:right;">
+449
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1991
+</td>
+<td style="text-align:right;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1993
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1996
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2002
+</td>
+<td style="text-align:right;">
+301
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2007
+</td>
+<td style="text-align:right;">
+1100
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:right;">
+2461
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2017
+</td>
+<td style="text-align:right;">
+2097
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>TYPE OF BANKS ESTABLISHED GOVERNMENT OR PRIVATE</p>
+<hr />
+<p>Private Sector Banks,Payments Bank,Foreign Bank,Small Finance Bank are grouped into Private Banks</p>
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/rbi_type_bank.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+library(kableExtra)
+
+totalseats %&gt;%
+  kbl() %&gt;%
+  kable_material(c(&quot;striped&quot;, &quot;hover&quot;),full_width = FALSE)%&gt;%kable_styling(bootstrap_options = &quot;striped&quot;)</code></pre>
+<table class=" lightable-material lightable-striped lightable-hover table table-striped" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+Count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Government
+</td>
+<td style="text-align:right;">
+7024
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Private
+</td>
+<td style="text-align:right;">
+327
+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>TYPE OF BANKS ESTABLISHED YEAR WISE</p>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+library(ggplot2)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/all_type.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+totalseats$year_y&lt;-as.factor(totalseats$year_y)
+ggplot(totalseats,aes(x=totalseats$year_y,y=totalseats$`Unnamed: 0_x`,fill=Type))+geom_col()+coord_flip()+labs(
+        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="regression-on-banks" class="section level1">
+<h1>REGRESSION ON BANKS</h1>
+<hr />
+<p>Banks From 1977-2019</p>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_banks
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-0.914
+</td>
+<td>
+-0.982
+</td>
+<td>
+-0.166
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.706)
+</td>
+<td>
+(0.705)
+</td>
+<td>
+(0.134)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+0.010
+</td>
+<td>
+0.016
+</td>
+<td>
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.034)
+</td>
+<td>
+(0.025)
+</td>
+<td>
+(0.005)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+0.220
+</td>
+<td>
+0.185
+</td>
+<td>
+0.055
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.257)
+</td>
+<td>
+(0.226)
+</td>
+<td>
+(0.043)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+8.994<sup>***</sup>
+</td>
+<td>
+4.472<sup>***</sup>
+</td>
+<td>
+1.034<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.986)
+</td>
+<td>
+(0.665)
+</td>
+<td>
+(0.138)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-51.918<sup>***</sup>
+</td>
+<td>
+-11.745<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(7.579)
+</td>
+<td>
+(1.650)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+1,514
+</td>
+<td>
+1,514
+</td>
+<td>
+1,514
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.016
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.008
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-5,474.194
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+10,958.390
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+6.261<sup>***</sup> (df = 4; 1500)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<hr />
+<div id="banks-from-1991-2019" class="section level2">
+<h2>Banks From 1991-2019</h2>
+<hr />
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_banks
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>panel</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>linear</em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn_cum_2
+</td>
+<td>
+-0.837
+</td>
+<td>
+-0.765
+</td>
+<td>
+-0.119
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.835)
+</td>
+<td>
+(0.830)
+</td>
+<td>
+(0.141)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+turnout_percentage
+</td>
+<td>
+0.028
+</td>
+<td>
+0.034
+</td>
+<td>
+0.010<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.053)
+</td>
+<td>
+(0.035)
+</td>
+<td>
+(0.006)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+enop
+</td>
+<td>
+0.342
+</td>
+<td>
+0.564<sup>*</sup>
+</td>
+<td>
+0.103<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.372)
+</td>
+<td>
+(0.327)
+</td>
+<td>
+(0.050)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(electors)
+</td>
+<td>
+10.765<sup>***</sup>
+</td>
+<td>
+10.577<sup>***</sup>
+</td>
+<td>
+1.781<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(2.507)
+</td>
+<td>
+(1.717)
+</td>
+<td>
+(0.259)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+</td>
+<td>
+-131.819<sup>***</sup>
+</td>
+<td>
+-21.780<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(21.707)
+</td>
+<td>
+(3.377)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+1,038
+</td>
+<td>
+1,038
+</td>
+<td>
+1,038
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.022
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.012
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-3,873.624
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+7,757.249
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+5.732<sup>***</sup> (df = 4; 1027)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<hr />
+</div>
+</div>
+<div id="pan-india-banks" class="section level1">
+<h1>PAN INDIA BANKS</h1>
+<ul>
+<li>Total banks (1977-2019)-50505</li>
+<li>Banks Post 2009 after merging with dynasty dataset:-31430</li>
+</ul>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+library(ggplot2)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+totalseats&lt;-totalseats[order(totalseats$n_banks),]
+ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+    y =&quot;Banks Established&quot;, x = &quot;State_Name&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<hr />
+<p>State wise breakup of banks post 2009</p>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+library(ggplot2)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/state_wise_banks_post_2009.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+totalseats&lt;-totalseats[order(totalseats$n_banks),]
+ggplot(totalseats,aes(x=reorder(totalseats$pc11_state_name,-totalseats$n_banks),y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+    y =&quot;Banks Established&quot;, x = &quot;State_Name&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<hr />
+<div id="year-wise-breakup-of-banks-1977-2019" class="section level2">
+<h2>Year wise breakup of banks 1977-2019</h2>
+<hr />
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(ggplot2)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+totalseats$year&lt;-as.factor(totalseats$year)
+ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="year-wise-breakup-of-banks-2009-2019" class="section level2">
+<h2>## Year wise breakup of banks 2009-2019</h2>
+<pre class="r"><code>#install.packages(&quot;kableExtra&quot;)
+#install.packages(&quot;magrittr&quot;) # package installations are only needed the first time you use it
+#install.packages(&quot;dplyr&quot;)    # alternative installation of the %&gt;%
+library(magrittr) # needs to be run every time you start R and want to use %&gt;%
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(ggplot2)
+totalseats&lt;-readr::read_csv(&#39;C:/Users/Jatin/Downloads/JatinCPR/Jatin NEW CPR/RBI NEW DATA/year_wise_banks_post_2009.csv&#39;)
+totalseats &lt;- subset(totalseats,select=-c(X1))
+totalseats$year&lt;-as.factor(totalseats$year)
+ggplot(totalseats,aes(x=totalseats$year,y=totalseats$n_banks,fill=Type))+geom_col()+coord_flip()+labs(
+        y =&quot;Banks Established&quot;, x = &quot;Year&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="banks-from-2009-2019" class="section level2">
+<h2>Banks From 2009-2019</h2>
+<hr />
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+n_banks
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>OLS</em>
+</td>
+<td>
+<em>normal</em>
+</td>
+<td>
+<em>glm: quasipoisson</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>link = log</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+OLS
+</td>
+<td>
+LOGIT
+</td>
+<td>
+POISSON
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dyn
+</td>
+<td>
+1.174
+</td>
+<td>
+1.174
+</td>
+<td>
+0.054
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.494)
+</td>
+<td>
+(1.494)
+</td>
+<td>
+(0.069)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+21.254<sup>***</sup>
+</td>
+<td>
+21.254<sup>***</sup>
+</td>
+<td>
+3.057<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.829)
+</td>
+<td>
+(0.829)
+</td>
+<td>
+(0.039)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Year fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+State fixed effects
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+1,454
+</td>
+<td>
+1,454
+</td>
+<td>
+1,454
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.0004
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+-0.0003
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-6,817.378
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+13,638.750
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+26.305 (df = 1452)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+0.617 (df = 1; 1452)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<hr />
+</div>
+</div>
